@@ -51,6 +51,7 @@ def create_invoice_pdf(output_path, header, table_records):
             name="Small",
             fontName="JP",
             fontSize=10,
+            alignment=TA_RIGHT,
         ),
     }
 
@@ -63,6 +64,16 @@ def create_invoice_pdf(output_path, header, table_records):
     wareki_date = to_wareki(header["invoice_date"]["value"])
     elements.append(Paragraph(wareki_date, styles["right"]))
     elements.append(Spacer(1, 12))
+
+
+    # COMPANY INFO (ย้ายมาไว้ใต้วันที่)
+    foot = (
+    "Kobayashi Manufacturing Co., Ltd.<br/>"
+    "11-15, The Jar of Records, Ryuji Sho<br/>"
+    "Tel: 075-9547200"
+    )
+    elements.append(Paragraph(foot, styles["small"]))
+    elements.append(Spacer(1, 30))
 
     # ---------------------------
     # TITLE
@@ -140,17 +151,6 @@ def create_invoice_pdf(output_path, header, table_records):
         )
     )
     elements.append(items_table)
-    elements.append(Spacer(1, 20))
-
-    # ---------------------------
-    # Company info
-    # ---------------------------
-    foot = (
-        "Kobayashi Manufacturing Co., Ltd.<br/>"
-        "11-15, The Jar of Records, Ryuji Sho<br/>"
-        "Tel: 075-9547200"
-    )
-    elements.append(Paragraph(foot, styles["small"]))
     elements.append(Spacer(1, 20))
 
     # ---------------------------
